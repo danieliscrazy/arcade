@@ -1,14 +1,10 @@
-// RST/Reset   Pin 0
-// SPI SS      Pin 15
-// SPI MOSI    Pin 13
-// SPI MISO    Pin 12
-// SPI SCK     Pin 14
-// Ground      Ground
-// 3.3V        3.3V
-
+#define UNO 14
 #include "config.h"
 AdafruitIO_Feed *nfc = io.feed("nfc");
+int varnamehere = 1;
+
 void setup() {
+  pinMode(UNO, INPUT);
   Serial.begin(115200);
   while (!Serial)
     ;
@@ -25,14 +21,17 @@ void setup() {
 
 void loop() {
   io.run();
-  if (Serial.available() > 0) {  // Start of Copilot generated Code
-    String signal = Serial.readStringUntil('\n');
-    signal.trim(); 
-    if (signal == "yes" || signal == "no") {
-      bool state = (signal == "yes");
-      Serial.print("Sending signal -> ");
-      Serial.println(state ? "yes" : "no");
-      nfc->save(state);
-    }  // End of Copilot generated Code
+
+  if (digitalRead(UNO) == HIGH) {
+    if (varnamehere == 1) {
+      Serial.println(varnamehere);
+      varnamehere = 0;
+    }
+  }
+  if (digitalRead(UNO) == LOW) {
+    if (varnamehere == 0) {
+      Serial.println(varnamehere);
+      varnamehere = 1;
+    }
   }
 }
