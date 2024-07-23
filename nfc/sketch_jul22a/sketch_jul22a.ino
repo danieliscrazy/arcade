@@ -26,12 +26,14 @@ void loop() {
     if (varnamehere == 1) {
       Serial.println(varnamehere);
       varnamehere = 0;
+      nfc->save("1");
     }
   }
   if (digitalRead(UNO) == LOW) {
     if (varnamehere == 0) {
       Serial.println(varnamehere);
       varnamehere = 1;
+      nfc->save("0");
     }
   }
 }
